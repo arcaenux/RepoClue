@@ -19,6 +19,9 @@ class GitHubClient:
     def search_repositories(
             self,
             query: str,
+            language: str | None = None,
+            min_stars: int  | None = None,
+            sort: str = "stars",
             limit: int = 10,
     ) -> dict:
         """Search public repositories and return GitHub's JSON response."""
@@ -28,12 +31,17 @@ class GitHubClient:
         if not 1 <= limit <= 100:
             raise ValueError("Limit must be between 1 and 100.")
 
+        if language:
+            query += f" language:{language}"
+        if min_stars is not None:
+            query += f" stars:>={min_stars}"
+
         response = self._client.get(
             "/search/repositories",
             params={
                 "q": query,
                 "per_page": limit,
-                "sort": "stars",
+                "sort": sort,
                 "order": "desc",
             },
         )

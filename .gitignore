@@ -8,3 +8,7 @@ venv/
 .env
 .pytest_cache/
 .coverage
+
+# Personal/local-only notes (not part of the project)
+/LEARNED.md
+/docs/AGENT_INSTRUCTIONS.md
